@@ -920,6 +920,7 @@ jobs:
             packages/syncthing-*.tar.gz \
             packages/syncthing-*.zip \
             packages/syncthing_*.deb
+          gh release edit "$VERSION" --draft=false
 
           PKGS=$(pwd)/packages
           cd /tmp # gh will not release for repo x while inside repo y
@@ -928,15 +929,15 @@ jobs:
             if ! gh release view --json name "$VERSION" >/dev/null 2>&1 ; then
               gh release create "$VERSION" \
                 $maybePrerelease \
+                --draft \
                 --title "$VERSION" \
                 --notes "https://github.com/syncthing/syncthing/releases/tag/$VERSION"
             fi
             gh release upload --clobber "$VERSION" \
               $PKGS/*.asc \
               $PKGS/*${repo}*
+            gh release edit "$VERSION" --draft=false
           done
-
-          gh release edit "$VERSION" --draft=false
         env:
           GH_TOKEN: ${{ secrets.ACTIONS_GITHUB_TOKEN }}
 
