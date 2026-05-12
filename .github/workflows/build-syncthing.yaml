@@ -159,7 +159,7 @@ jobs:
     needs:
       - build-test
       - package-linux
-      - package-illumos
+      # - package-illumos
       - package-cross
       - package-source
       - package-debian
@@ -645,7 +645,7 @@ jobs:
     needs:
       - codesign-windows
       - package-linux
-      - package-illumos
+      # - package-illumos
       - package-macos
       - package-cross
       - package-source
